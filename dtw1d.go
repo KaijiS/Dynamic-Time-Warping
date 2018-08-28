@@ -40,15 +40,15 @@ func strToFloat64_1d(i []string) []float64 {
 	return f
 }
 
-// func float64ToStr(x float64) string {
-// 	// 実数型から文字列型に変換
-// 	// 引数：実数型の1変数
-// 	// 返り値：文字列型の変数
-//
-// 	f := strconv.FormatFloat(x, 'f', 8, 64)
-//
-// 	return f
-// }
+func float64ToStr(x float64) string {
+	// 実数型から文字列型に変換
+	// 引数：実数型の1変数
+	// 返り値：文字列型の変数
+
+	f := strconv.FormatFloat(x, 'f', 8, 64)
+
+	return f
+}
 
 //-------------------------- ファイル 入出力関係-----------------------------------
 
@@ -77,28 +77,28 @@ func csvReader_1d(readFilename string) []string {
 	return str_data
 }
 
-// func csvWriter(str string, writeFilename string) {
-// 	// csv 書き込み
-// 	// 引数：csvファイルに書き込む変数．ファイル名(ファイルパス含む)
-// 	// 返り値：なし
-//
-// 	strCSV := str
-//
-// 	// 以下txtファイル出力の要領でcsvファイルを出力
-//
-// 	// ファイルを書き込み用にオープン (mode=0666)
-// 	file, err := os.Create(writeFilename)
-// 	if err != nil {
-// 		panic(err)
-// 	}
-// 	defer file.Close()
-//
-// 	// テキストを書き込む
-// 	_, err = file.WriteString(strCSV)
-// 	if err != nil {
-// 		panic(err)
-// 	}
-// }
+func csvWriter(str string, writeFilename string) {
+	// csv 書き込み
+	// 引数：csvファイルに書き込む変数．ファイル名(ファイルパス含む)
+	// 返り値：なし
+
+	strCSV := str
+
+	// 以下txtファイル出力の要領でcsvファイルを出力
+
+	// ファイルを書き込み用にオープン (mode=0666)
+	file, err := os.Create(writeFilename)
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+
+	// テキストを書き込む
+	_, err = file.WriteString(strCSV)
+	if err != nil {
+		panic(err)
+	}
+}
 
 //------------------------- 要素同士の距離------------------------
 
@@ -184,7 +184,7 @@ func main() {
 	YreadFilename := *YrfOpt // 読み込みyファイル名
 	writeFilePath := *wfpOpt // 書き出しファイル名
 	selectDist := *distOpt
-	if XreadFilename == "default" || YreadFilename == "default" || writeFilePath == "default" || selectDist == "default" {
+	if XreadFilename == "default" || YreadFilename == "default" || selectDist == "default" {
 		fmt.Print("コマンドライン引数エラー")
 		return
 	}
@@ -203,9 +203,10 @@ func main() {
 	// DTW距離を標準出力する
 	fmt.Print(dtwArray[len(x)-1][len(y)-1])
 
-	// 実数値型から文字列型へ変換
-	// dtwDistance := float64ToStr(dtwArray[len(x)-1][len(y)-1])
-
-	// DTW距離をファイル書き出し
-	// csvWriter(dtwDistance, writeFilePath)
+	if writeFilePath != "default" {
+		// 実数値型から文字列型へ変換
+		dtwDistance := float64ToStr(dtwArray[len(x)-1][len(y)-1])
+		// DTW距離をファイル書き出し
+		csvWriter(dtwDistance, writeFilePath)
+	}
 }

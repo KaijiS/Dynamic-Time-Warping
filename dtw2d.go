@@ -8,6 +8,7 @@ import (
 	"math"
 	"os"
 	"strconv"
+	"strings"
 	// "strings"
 )
 
@@ -46,17 +47,17 @@ func strToFloat64_2d(x [][]string) [][]float64 {
 	return f
 }
 
-// func float64ToStr_1d(x []float64) []string {
-// 	// 1次元スライスに対して、実数型から文字列型に変換
-// 	// 引数：実数型の1次元スライス
-// 	// 返り値：文字列型の1次元スライス
-//
-// 	f := make([]string, len(x))
-// 	for i := range f {
-// 		f[i] = strconv.FormatFloat(x[i], 'f', 8, 64)
-// 	}
-// 	return f
-// }
+func float64ToStr_1d(x []float64) []string {
+	// 1次元スライスに対して、実数型から文字列型に変換
+	// 引数：実数型の1次元スライス
+	// 返り値：文字列型の1次元スライス
+
+	f := make([]string, len(x))
+	for i := range f {
+		f[i] = strconv.FormatFloat(x[i], 'f', 8, 64)
+	}
+	return f
+}
 
 //-------------------------- ファイル 入出力関係-----------------------------------
 
@@ -79,29 +80,29 @@ func csvReader_2d(readFilename string) [][]string {
 	return str_data
 }
 
-// func csvWriter_1d(str1d []string, writeFilename string) {
-// 	// csv 書き込み(「,」や改行を含めることでひとつの文字列として出力したものをcsvとする)
-// 	// 引数：csvファイルに書き込む1次元スライス．ファイル名(ファイルパス含む)
-// 	// 返り値：なし
-//
-// 	// 1次元スライスについて「,」でつなげる
-// 	strCSV := strings.Join(str1d, ",")
-//
-// 	// 以下txtファイル出力の要領でcsvファイルを出力
-//
-// 	// ファイルを書き込み用にオープン (mode=0666)
-// 	file, err := os.Create(writeFilename)
-// 	if err != nil {
-// 		panic(err)
-// 	}
-// 	defer file.Close()
-//
-// 	// テキストを書き込む
-// 	_, err = file.WriteString(strCSV)
-// 	if err != nil {
-// 		panic(err)
-// 	}
-// }
+func csvWriter_1d(str1d []string, writeFilename string) {
+	// csv 書き込み(「,」や改行を含めることでひとつの文字列として出力したものをcsvとする)
+	// 引数：csvファイルに書き込む1次元スライス．ファイル名(ファイルパス含む)
+	// 返り値：なし
+
+	// 1次元スライスについて「,」でつなげる
+	strCSV := strings.Join(str1d, ",")
+
+	// 以下txtファイル出力の要領でcsvファイルを出力
+
+	// ファイルを書き込み用にオープン (mode=0666)
+	file, err := os.Create(writeFilename)
+	if err != nil {
+		panic(err)
+	}
+	defer file.Close()
+
+	// テキストを書き込む
+	_, err = file.WriteString(strCSV)
+	if err != nil {
+		panic(err)
+	}
+}
 
 //------------------------- 要素同士の距離------------------------
 
@@ -187,7 +188,7 @@ func main() {
 	YreadFilename := *YrfOpt // 読み込みyファイル名
 	writeFilePath := *wfpOpt // 書き出しファイル名
 	selectDist := *distOpt
-	if XreadFilename == "default" || YreadFilename == "default" || writeFilePath == "default" || selectDist == "default" {
+	if XreadFilename == "default" || YreadFilename == "default" || selectDist == "default" {
 		fmt.Print("コマンドライン引数エラー")
 		return
 	}
@@ -208,10 +209,12 @@ func main() {
 		dtwList = append(dtwList, dtwArray[len(X[i])-1][len(Y[i])-1])
 	}
 
-	// 実数値型から文字列型へ変換
-	// dtwListstr := float64ToStr_1d(dtwList)
-	// DTW距離をファイル書き出し
-	// csvWriter_1d(dtwListstr, writeFilePath)
+	if writeFilePath != "default" {
+		// 実数値型から文字列型へ変換
+		dtwListstr := float64ToStr_1d(dtwList)
+		// DTW距離をファイル書き出し
+		csvWriter_1d(dtwListstr, writeFilePath)
+	}
 
 	// DTW距離を標準出力する
 	fmt.Println(dtwList)

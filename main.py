@@ -15,7 +15,8 @@ os.makedirs(tmpDir, exist_ok=True)
 def dtw1d(x,y):
 	np.savetxt(tmpDir + "x.csv", x, delimiter=",")
 	np.savetxt(tmpDir + "y.csv", y, delimiter=",")
-	dtwGo = subprocess.run(["./dtw1d", "-Xrf", tmpDir + "x.csv", "-Yrf", tmpDir + "y.csv", "-wfp", tmpDir + "dtw.csv", "-d", "se"], check=True, stdout=subprocess.PIPE).stdout
+	dtwGo = subprocess.run(["./dtw1d", "-Xrf", tmpDir + "x.csv", "-Yrf", tmpDir + "y.csv", "-d", "se"], check=True, stdout=subprocess.PIPE).stdout
+	# dtwGo = subprocess.run(["./dtw1d", "-Xrf", tmpDir + "x.csv", "-Yrf", tmpDir + "y.csv", "-wfp", tmpDir + "dtw.csv", "-d", "se"], check=True, stdout=subprocess.PIPE).stdout
 	if dtwGo.decode() == "コマンドライン引数エラー":
 		print("実行ファイルへの引数エラー")
 	else:
@@ -26,7 +27,8 @@ def dtw1d(x,y):
 def dtw2d(X,Y):
 	np.savetxt(tmpDir + "X.csv", X, delimiter=",")
 	np.savetxt(tmpDir + "Y.csv", Y, delimiter=",")
-	dtwGo = subprocess.run(["./dtw2d", "-Xrf", tmpDir + "X.csv", "-Yrf", tmpDir + "Y.csv", "-wfp", tmpDir + "dtw.csv", "-d", "se"], check=True, stdout=subprocess.PIPE).stdout
+	dtwGo = subprocess.run(["./dtw2d", "-Xrf", tmpDir + "X.csv", "-Yrf", tmpDir + "Y.csv", "-d", "se"], check=True, stdout=subprocess.PIPE).stdout
+	# dtwGo = subprocess.run(["./dtw2d", "-Xrf", tmpDir + "X.csv", "-Yrf", tmpDir + "Y.csv", "-wfp", tmpDir + "dtw.csv", "-d", "se"], check=True, stdout=subprocess.PIPE).stdout
 	if dtwGo.decode() == "コマンドライン引数エラー":
 		print("実行ファイルへの引数エラー")
 	else:
