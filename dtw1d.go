@@ -200,10 +200,10 @@ func main() {
 	// DTWを計算
 	dtwArray, _ := dtw(x, y, selectDist)
 
-	// DTW距離を標準出力する
-	fmt.Print(dtwArray[len(x)-1][len(y)-1])
-
-	if writeFilePath != "default" {
+	if writeFilePath == "default" {
+		// DTW距離を標準出力する
+		fmt.Print(dtwArray[len(x)-1][len(y)-1])
+	} else {
 		// 実数値型から文字列型へ変換
 		dtwDistance := float64ToStr(dtwArray[len(x)-1][len(y)-1])
 		// DTW距離をファイル書き出し

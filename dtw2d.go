@@ -209,14 +209,14 @@ func main() {
 		dtwList = append(dtwList, dtwArray[len(X[i])-1][len(Y[i])-1])
 	}
 
-	if writeFilePath != "default" {
+	if writeFilePath == "default" {
+		// DTW距離を標準出力する
+		fmt.Println(dtwList)
+	} else {
 		// 実数値型から文字列型へ変換
 		dtwListstr := float64ToStr_1d(dtwList)
 		// DTW距離をファイル書き出し
 		csvWriter_1d(dtwListstr, writeFilePath)
 	}
-
-	// DTW距離を標準出力する
-	fmt.Println(dtwList)
 
 }
