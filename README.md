@@ -1,7 +1,8 @@
 # Dynamic-Time-Warping
 
 ## 概要
-go言語で動的時間伸縮法(Dynamic-Time-Warping)を実装しpython3から呼び出せるようにした．
+go言語で動的時間伸縮法(Dynamic-Time-Warping)を実装しpython3から呼び出せるようにした．  
+https://qiita.com/KaijiS/items/13ffda7f2490ed879e52
 
 ## Golangを用いてDTWを計算するプログラムについて
 
