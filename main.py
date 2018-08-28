@@ -38,7 +38,7 @@ def dtw2d(X,Y):
 
 def main():
 
-	NumOfData = 50 # データの数
+	NumOfData = 500 # データの数
 
 	#乱数を用いて配列Xを生成
 	X = np.random.rand(NumOfData,500) # 500次元ベクトルのデータ
@@ -50,13 +50,13 @@ def main():
 	start = time.time()
 	for x,y in zip(X,Y):
 		dtw1.append(dtw1d(x,y))
-	print("time of loop by dtw1d", time.time() - start)
+	print("time of loop by dtw1d: ", time.time() - start)
 	# print("result of dtw1d", np.array(dtw1))
 
 	# 2次元配列全体を実行ファイル全体に渡し計算する
 	start = time.time()
 	dtw2 = dtw2d(X,Y)
-	print("time of loop by dtw2d", time.time() - start)
+	print("time of loop by dtw2d: ", time.time() - start)
 	# print("result of dtw2d", np.array(dtw2))
 
 
